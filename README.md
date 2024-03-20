@@ -2,11 +2,11 @@
 
 # Chat app project (Slack)
 
-[](https://github.com/nikolaydlv/frontend-project-12#chat-app-project-slack)
+
 
 A simplified version of Slack chat. The chat has a system of registration, authorization. The chat has the ability to create channels, change channel names and delete them.
 
-### [Demo](https://frontend-project-12-yjz3.onrender.com/)
+### [Demo](https://frontend-project-12-2ncc.onrender.com)
 
 ## Getting Started
 
