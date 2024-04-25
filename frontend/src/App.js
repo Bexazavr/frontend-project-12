@@ -1,20 +1,28 @@
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./Components/Login/Login";
+import LoginPage from "./Components/LoginPage/LoginPage";
+import MainPage from "./Components/MainPage/MainPage";
 import NotFoundPage from "./Components/NotFoundPage/NotFoundPage";
+import { AuthorizationContextProvider } from "./context/AuthorizationContext.js";
+import PrivateRoutes from "./utils/PrivateRoutes.jsx";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <BrowserRouter>
-          <Routes>
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="login" element={<Login />} />
-          </Routes>
-        </BrowserRouter>
-      </header>
-    </div>
+    <AuthorizationContextProvider>
+      <div className="App">
+        <header className="App-header">
+          <BrowserRouter>
+            <Routes>
+              <Route element={<PrivateRoutes />}>
+                <Route path="/" exact element={<MainPage />} />
+              </Route>
+              <Route path="*" element={<NotFoundPage />} />
+              <Route path="login" element={<LoginPage />} />
+            </Routes>
+          </BrowserRouter>
+        </header>
+      </div>
+    </AuthorizationContextProvider>
   );
 }
 
