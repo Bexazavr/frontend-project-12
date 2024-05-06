@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import LoginPage from "./componentss/LoginPage/LoginPage";
-import MainPage from "./componentss/MainPage/MainPage";
-import NotFoundPage from "./componentss/NotFoundPage/NotFoundPage";
+import LoginPage from "./components/LoginPage/LoginPage";
+import MainPage from "./components/MainPage/MainPage";
+import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 import { AuthorizationContextProvider } from "./context/AuthorizationContext.js";
 import PrivateRoutes from "./utils/PrivateRoutes.jsx";
 import store from "./slices/index.js";
