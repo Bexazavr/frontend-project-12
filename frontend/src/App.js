@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./Components/LoginPage/LoginPage";
-import MainPage from "./Components/MainPage/MainPage";
-import NotFoundPage from "./Components/NotFoundPage/NotFoundPage";
+import LoginPage from "./components/LoginPage/LoginPage";
+import MainPage from "./components/MainPage/MainPage";
+import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 import { AuthorizationContextProvider } from "./context/AuthorizationContext.js";
 import PrivateRoutes from "./utils/PrivateRoutes.jsx";
 import "./App.css";

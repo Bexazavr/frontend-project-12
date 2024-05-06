@@ -7,6 +7,12 @@ import axios from "axios";
 import "./LoginPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 const LoginPage = () => {
   const { setLogin } = useAuthorizationContext();
   const loginInput = useRef();
@@ -37,43 +43,48 @@ const LoginPage = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="form-group mb-3">
-        <label htmlFor="username" className="form-label">
-          Ваш ник
-        </label>
-        <input
-          className="form-control"
-          id="username"
-          name="username"
-          ref={loginInput}
-          onChange={formik.handleChange}
-          value={formik.values.username}
-        />
-      </div>
-      <div className="form-group mb-3">
-        <label htmlFor="password" className="form-label">
-          Пароль
-        </label>
-        <input
-          className="form-control"
-          id="password"
-          name="password"
-          type="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-      </div>
-      {loginFailedError && (
-        <div className="form-group mb-3">
-          <h4>{loginFailedError}</h4>
-        </div>
-      )}
-
-      <button className="btn btn-primary" type="submit">
-        Войти
-      </button>
-    </form>
+    <Container fluid className="h-100">
+      <Row className="justify-content-center align-content-center h-100">
+        <Col sm={4}>
+          <Form onSubmit={formik.handleSubmit} className="p-3">
+            <Form.Group>
+              <Form.Label htmlFor="username">Username</Form.Label>
+              <Form.Control
+                onChange={formik.handleChange}
+                value={formik.values.username}
+                placeholder="Ваш ник"
+                name="username"
+                id="username"
+                autoComplete="username"
+                isInvalid={!!loginFailedError}
+                required
+                ref={loginInput}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label htmlFor="password">Password</Form.Label>
+              <Form.Control
+                type="password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                placeholder="password"
+                name="password"
+                id="password"
+                autoComplete="current-password"
+                isInvalid={!!loginFailedError}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {loginFailedError}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Button type="submit" variant="outline-primary" className="mt-2">
+              Войти
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
