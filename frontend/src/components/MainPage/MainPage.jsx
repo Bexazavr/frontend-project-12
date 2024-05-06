@@ -1,8 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import ChannelList from "../../components/ChannelList/ChannelList";
-import ChatWindow from "../../components/ChatWindow/ChatWindow";
+import ChannelList from "../ChannelList/ChannelList";
+import ChatWindow from "../ChatWindow/ChatWindow";
 
 import axios from "axios";
 import { useEffect } from "react";
