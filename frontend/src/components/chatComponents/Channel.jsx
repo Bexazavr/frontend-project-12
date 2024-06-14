@@ -1,6 +1,7 @@
+import { Dropdown, ButtonGroup } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelectedChannel } from "../../hooks/hooks.js";
-import { selectCurrentChannel } from "../../slices/channelsSlice.js";
+import { selectCurrentChannel } from "../../slices/selectChannelSlice.js";
 
 const Channel = ({ data }) => {
   const { id, name, removable } = data;
@@ -27,24 +28,34 @@ const Channel = ({ data }) => {
 
   return (
     <li id={id} className="nav-item w-100">
-      <div
-        role="group"
-        className="w-100 rounded-0 text-start text-truncate btn"
-      >
+      <Dropdown className="d-flex btn-group" as={ButtonGroup}>
         <button
+          onClick={() => dispatch(selectCurrentChannel(data))}
+          className={
+            Number(id) !== selectedChannel.currentChannelId
+              ? "w-100 rounded-0 text-start text-truncate btn"
+              : "w-100 rounded-0 text-start text-truncate btn btn-secondary"
+          }
           type="button"
-          className="w-100 rounded-0 text-start text-truncate btn"
         >
           <span className="me-1">#</span>
           {name}
         </button>
-        <button
-          type="button"
-          className="flex-grow-0 dropdown-toggle dropdown-toggle-split btn"
+        <Dropdown.Toggle
+          variant={
+            Number(id) !== selectedChannel.currentChannelId
+              ? "light"
+              : "secondary"
+          }
+          className="flex-grow-0 dropdown-toggle-split"
         >
           <span className="visually-hidden">Управление каналом</span>
-        </button>
-      </div>
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item>Удалить</Dropdown.Item>
+          <Dropdown.Item>Переименовать</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </li>
   );
 };

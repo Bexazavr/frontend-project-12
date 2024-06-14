@@ -1,37 +1,42 @@
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { ArrowRightSquare } from "react-bootstrap-icons";
-import { WebSocketContext } from "../../context/webSocketContext.js";
-import { useSelectedChannel, useAuth } from "../../hooks/hooks.js";
+import {
+  useSelectedChannel,
+  useAuth,
+  useModal,
+  useMessages,
+} from "../../hooks/hooks.js";
 import {
   useGetMessagesQuery,
   useAddMessageMutation,
 } from "../../services/messagesApi.js";
 
 import Message from "./Message.jsx";
+
 const MessagesComponent = () => {
   const selectedChannel = useSelectedChannel();
   const auth = useAuth();
+  const modal = useModal();
+  const newMessages = useMessages();
   const messageRef = useRef();
   const messageEnd = useRef();
-  const socket = useContext(WebSocketContext);
 
-  const {
-    data,
-    //  error,
-    isLoading,
-    refetch,
-  } = useGetMessagesQuery(auth.token);
-
-  socket.on("newMessage", () => {
-    refetch();
-  });
+  const { data, isLoading, refetch } = useGetMessagesQuery(auth.token);
 
   const [addMessage] = useAddMessageMutation();
+
   useEffect(() => {
-    messageRef.current.focus();
-  }, [data]);
+    if (!modal.isOpen) {
+      messageRef.current.focus();
+    }
+  });
+
+  useEffect(() => {
+    messageEnd.current?.scrollIntoView();
+  }, [data, newMessages]);
+
   const formik = useFormik({
     initialValues: {
       body: "",
@@ -51,13 +56,13 @@ const MessagesComponent = () => {
         };
         addMessage(newMessagePost);
         formik.resetForm();
-        messageEnd.current?.scrollIntoView();
       } catch (e) {
         console.log(e);
         throw e;
       }
     },
   });
+
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -65,7 +70,9 @@ const MessagesComponent = () => {
           <p className="m-0">
             <b>{`# ${selectedChannel.currentChannelName}`}</b>
           </p>
-          <span className="text-muted">Cообщения</span>
+          <span className="text-muted">
+            {isLoading ? null : `${Object.keys(data).length} сообщений`}
+          </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
           {isLoading
@@ -79,6 +86,15 @@ const MessagesComponent = () => {
                 .map((message) => (
                   <Message key={message.id} message={message} />
                 ))}
+          {newMessages
+            .filter(
+              (message) =>
+                message.channelId ===
+                selectedChannel.currentChannelId.toString()
+            )
+            .map((message) => (
+              <Message key={message.id} message={message} />
+            ))}
           <div ref={messageEnd} />
         </div>
         <div className="mt-auto px-5 py-3">
@@ -119,4 +135,5 @@ const MessagesComponent = () => {
     </div>
   );
 };
+
 export default MessagesComponent;

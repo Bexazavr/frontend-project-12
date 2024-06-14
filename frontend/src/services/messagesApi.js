@@ -1,43 +1,26 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import getPath from '../routes.js';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import getPath from "../routes.js";
 
 export const messagesApi = createApi({
-  reducerPath: 'messages',
+  reducerPath: "messagesApi",
   baseQuery: fetchBaseQuery({ baseUrl: getPath.messagesPath() }),
+  tagTypes: ["Channel"],
   endpoints: (builder) => ({
     getMessages: builder.query({
       query: (token) => ({
-        method: 'GET',
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        providesTags: ["Channel"],
       }),
     }),
     addMessage: builder.mutation({
       query: (newMessage) => ({
-        method: 'POST',
+        method: "POST",
         body: newMessage.message,
         headers: {
           Authorization: `Bearer ${newMessage.token}`,
-        },
-      }),
-    }),
-    editMessage: builder.mutation({
-      query: (id, editedMessage, token) => ({
-        url: id,
-        method: 'PATCH',
-        body: editedMessage,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-    }),
-    removeMessage: builder.mutation({
-      query: (id, token) => ({
-        url: id,
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
         },
       }),
     }),

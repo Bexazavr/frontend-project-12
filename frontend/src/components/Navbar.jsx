@@ -1,6 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useAuth } from "../hooks/hooks.js";
 import { logOut } from "../slices/authSlice.js";
+import { clearMessageHistory } from "../slices/messagesSlice.js";
+import { clearChannelHistory } from "../slices/channelsSlice.js";
 import getPath from "../routes.js";
 
 const LogOutButton = () => {
@@ -9,7 +11,11 @@ const LogOutButton = () => {
 
   return !auth.token ? null : (
     <button
-      onClick={() => dispatch(logOut())}
+      onClick={() => {
+        dispatch(logOut());
+        dispatch(clearMessageHistory());
+        dispatch(clearChannelHistory());
+      }}
       className="btn btn-primary"
       type="button"
     >
