@@ -23,7 +23,12 @@ const MessagesComponent = () => {
   const messageRef = useRef();
   const messageEnd = useRef();
 
-  const { data, isLoading, refetch } = useGetMessagesQuery(auth.token);
+  const { data, isLoading } = useGetMessagesQuery(auth.token);
+
+  const newCurrentMessages = newMessages.filter(
+    (message) =>
+      message.channelId === selectedChannel.currentChannelId.toString()
+  );
 
   const [addMessage] = useAddMessageMutation();
 
@@ -71,7 +76,8 @@ const MessagesComponent = () => {
             <b>{`# ${selectedChannel.currentChannelName}`}</b>
           </p>
           <span className="text-muted">
-            {isLoading ? null : `${Object.keys(data).length} сообщений`}
+            {isLoading ? null : `${data
+              .filter((message) => message.channelId === selectedChannel.currentChannelId.toString()).length + newCurrentMessages.length} сообщений`}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
