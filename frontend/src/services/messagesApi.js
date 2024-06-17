@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import getPath from "../routes.js";
-
 export const messagesApi = createApi({
   reducerPath: "messagesApi",
   baseQuery: fetchBaseQuery({ baseUrl: getPath.messagesPath() }),
@@ -12,8 +11,8 @@ export const messagesApi = createApi({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        providesTags: ["Channel"],
       }),
+      providesTags: ["Channel"],
     }),
     addMessage: builder.mutation({
       query: (newMessage) => ({
@@ -26,7 +25,6 @@ export const messagesApi = createApi({
     }),
   }),
 });
-
 export const {
   useGetMessagesQuery,
   useAddMessageMutation,

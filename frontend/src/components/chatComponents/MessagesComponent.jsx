@@ -25,7 +25,7 @@ const MessagesComponent = () => {
 
   const { data, isLoading } = useGetMessagesQuery(auth.token);
 
-  const newCurrentMessages = newMessages.filter(
+  const newCurrentMessages = newMessages.data.filter(
     (message) =>
       message.channelId === selectedChannel.currentChannelId.toString()
   );
@@ -76,8 +76,15 @@ const MessagesComponent = () => {
             <b>{`# ${selectedChannel.currentChannelName}`}</b>
           </p>
           <span className="text-muted">
-            {isLoading ? null : `${data
-              .filter((message) => message.channelId === selectedChannel.currentChannelId.toString()).length + newCurrentMessages.length} сообщений`}
+            {isLoading
+              ? null
+              : `${
+                  data.filter(
+                    (message) =>
+                      message.channelId ===
+                      selectedChannel.currentChannelId.toString()
+                  ).length + newCurrentMessages.length
+                } сообщений`}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
@@ -92,7 +99,7 @@ const MessagesComponent = () => {
                 .map((message) => (
                   <Message key={message.id} message={message} />
                 ))}
-          {newMessages
+          {newMessages.data
             .filter(
               (message) =>
                 message.channelId ===
