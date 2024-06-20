@@ -3,17 +3,24 @@ import { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useModal, useAuth, useChannels } from "../../../hooks/hooks";
+import {
+  useModal,
+  useAuth,
+  useChannels,
+  useSelectedChannel,
+} from "../../../hooks/hooks";
+import { selectCurrentChannel } from "../../../slices/selectChannelSlice.js";
 import { closeModal } from "../../../slices/modalSlice.js";
 import {
-  useAddChannelMutation,
+  useEditChannelMutation,
   useGetChannelsQuery,
 } from "../../../services/channelsApi.js";
-import { selectCurrentChannel } from "../../../slices/selectChannelSlice.js";
+import { clearChannelHistory } from "../../../slices/channelsSlice.js";
 
-const AddChannelComponent = () => {
+const RenameChannelComponent = () => {
   const modal = useModal();
   const auth = useAuth();
+  const selectedChannel = useSelectedChannel();
   const newChannels = useChannels();
   const dispatch = useDispatch();
   const addChannelRef = useRef();
@@ -22,12 +29,13 @@ const AddChannelComponent = () => {
     addChannelRef.current.focus();
   }, []);
 
-  const { data } = useGetChannelsQuery(auth.token);
+  const { data, refetch } = useGetChannelsQuery(auth.token);
 
-  const [AddChannel] = useAddChannelMutation();
+  const [editChannel] = useEditChannelMutation();
 
   const channelsNames = data.map((channel) => channel.name);
   const newChannelsNames = newChannels.data.map((channel) => channel.name);
+  const newChannelsIds = newChannels.data.map((channel) => channel.id);
 
   const formik = useFormik({
     initialValues: {
@@ -48,17 +56,24 @@ const AddChannelComponent = () => {
     onSubmit: async (values) => {
       try {
         const newChannel = {
+          id: modal.id,
           body: { name: values.channelName },
           token: auth.token,
         };
-        const response = await AddChannel(newChannel);
+        editChannel(newChannel);
         dispatch(closeModal());
-        dispatch(
-          selectCurrentChannel({
-            id: response.data.id,
-            name: response.data.name,
-          })
-        );
+        if (selectedChannel.currentChannelId.toString() === modal.id) {
+          dispatch(
+            selectCurrentChannel({
+              id: selectedChannel.currentChannelId,
+              name: values.channelName,
+            })
+          );
+        }
+        if (!newChannelsIds.includes(modal.id)) {
+          dispatch(clearChannelHistory());
+          refetch();
+        }
       } catch (e) {
         console.log(e);
         throw e;
@@ -69,7 +84,7 @@ const AddChannelComponent = () => {
   return (
     <Modal centered show={modal.isOpen} onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title h4="true">Добавить канал</Modal.Title>
+        <Modal.Title h4="true">Переименовать канал</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -85,7 +100,7 @@ const AddChannelComponent = () => {
               ref={addChannelRef}
             />
             <Form.Label htmlFor="channelName" className="visually-hidden">
-              Добавить канал
+              Переименовать канал
             </Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.channelName}
@@ -114,4 +129,4 @@ const AddChannelComponent = () => {
   );
 };
 
-export default AddChannelComponent;
+export default RenameChannelComponent;
