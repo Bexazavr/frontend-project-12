@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 import { useModal, useAuth, useChannels } from "../../../hooks/hooks";
 import { closeModal } from "../../../slices/modalSlice.js";
 import {
@@ -12,6 +13,7 @@ import {
 import { selectCurrentChannel } from "../../../slices/selectChannelSlice.js";
 
 const AddChannelComponent = () => {
+  const { t } = useTranslation();
   const modal = useModal();
   const auth = useAuth();
   const newChannels = useChannels();
@@ -37,13 +39,10 @@ const AddChannelComponent = () => {
       channelName: yup
         .string()
         .trim()
-        .required("Обязательное поле")
-        .min(3, "От 3 до 20 символов")
-        .max(20, "От 3 до 20 символов")
-        .notOneOf(
-          [...channelsNames, ...newChannelsNames],
-          "Должно быть уникальным"
-        ),
+        .required(t("yup.required"))
+        .min(3, t("yup.minAndMaxChannel"))
+        .max(20, t("yup.minAndMaxChannel"))
+        .notOneOf([...channelsNames, ...newChannelsNames], t("yup.notOneOf")),
     }),
     onSubmit: async (values) => {
       try {
@@ -69,7 +68,7 @@ const AddChannelComponent = () => {
   return (
     <Modal centered show={modal.isOpen} onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title h4="true">Добавить канал</Modal.Title>
+        <Modal.Title h4="true">{t("modals.addChannel")}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -85,7 +84,7 @@ const AddChannelComponent = () => {
               ref={addChannelRef}
             />
             <Form.Label htmlFor="channelName" className="visually-hidden">
-              Добавить канал
+              {t("modals.addChannel")}
             </Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.channelName}
@@ -97,14 +96,14 @@ const AddChannelComponent = () => {
                 type="button"
                 onClick={() => dispatch(closeModal())}
               >
-                Отменить
+                {t("modals.cancel")}
               </Button>
               <Button
                 variant="primary"
                 type="submit"
                 onClick={formik.handleSubmit}
               >
-                Отправить
+                {t("modals.send")}
               </Button>
             </div>
           </Form.Group>
