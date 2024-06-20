@@ -6,7 +6,6 @@ import axios from "axios";
 import { addLoginInfo } from "../slices/authSlice.js";
 import img from "../assets/avatar.jpg";
 import getPath from "../routes.js";
-import * as yup from 'yup';
 
 const LoginPage = () => {
   const [loginFailed, setFailedLogin] = useState(false);
@@ -21,14 +20,14 @@ const LoginPage = () => {
       username: "",
       password: "",
     },
-    validationSchema: yup.object({
-      username: yup.string().required(('yup.required')),
-      password: yup.string().required(('yup.required')),
-    }),
     onSubmit: async (values) => {
       setFailedLogin(false);
       try {
-        const result = await axios.post(getPath.loginPath(), values);
+        const { username, password } = values;
+        const result = await axios.post(getPath.loginPath(), {
+          username,
+          password,
+        });
         const { data } = result;
         dispatch(addLoginInfo({ data }));
         navigate(getPath.chatPage());
@@ -113,7 +112,7 @@ const LoginPage = () => {
             <div className="card-footer p-4">
               <div className="text-center">
                 <span>Нет аккаунта?</span>{" "}
-                <NavLink to={getPath.notFoundPage()}>Регистрация</NavLink>
+                <NavLink to={getPath.signUpPage()}>Регистрация</NavLink>
               </div>
             </div>
           </div>

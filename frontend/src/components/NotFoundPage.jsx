@@ -1,7 +1,7 @@
 import img from "../assets/404.jpg";
 import getPath from "../routes.js";
 
-const NotFound = () => (
+const NotFoundPage = () => (
   <div className="text-center">
     <img alt="Страница не найдена" className="img-fluid" src={img} />
     <h1 className="h4 text-muted">Страница не найдена</h1>
@@ -11,4 +11,4 @@ const NotFound = () => (
   </div>
 );
 
-export default NotFound;
+export default NotFoundPage;
