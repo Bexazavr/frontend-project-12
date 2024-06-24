@@ -8,7 +8,6 @@ import {
   useRemoveChannelMutation,
   useGetChannelsQuery,
 } from "../../../services/channelsApi.js";
-
 const RemoveChannelComponent = () => {
   const { t } = useTranslation();
   const modal = useModal();
@@ -18,14 +17,13 @@ const RemoveChannelComponent = () => {
   const [removeChannel] = useRemoveChannelMutation();
   const { refetch } = useGetChannelsQuery(auth.token);
   const channel = { id: modal.id, token: auth.token };
-
   return (
     <Modal centered show={modal.isOpen} onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
         <Modal.Title>{t("modals.deleteChannel")}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p className="lead">{t("modals.sure")}</p>
+        <p className="lead">{t("sure")}</p>
         <div className="d-flex justify-content-end">
           <Button
             variant="secondary"
@@ -33,7 +31,7 @@ const RemoveChannelComponent = () => {
             type="button"
             onClick={() => dispatch(closeModal())}
           >
-            {t("modals.cancel")}
+            {t("cancel")}
           </Button>
           <Button
             variant="danger"
@@ -47,12 +45,11 @@ const RemoveChannelComponent = () => {
               dispatch(closeModal());
             }}
           >
-            {t("modals.delete")}
+            {t("delete")}
           </Button>
         </div>
       </Modal.Body>
     </Modal>
   );
 };
-
 export default RemoveChannelComponent;

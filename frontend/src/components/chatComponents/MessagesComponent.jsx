@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import { useFormik } from "formik";
+import { useTranslation } from "react-i18next";
 import * as yup from "yup";
 import { ArrowRightSquare } from "react-bootstrap-icons";
 import {
@@ -12,10 +13,10 @@ import {
   useGetMessagesQuery,
   useAddMessageMutation,
 } from "../../services/messagesApi.js";
-
 import Message from "./Message.jsx";
 
 const MessagesComponent = () => {
+  const { t } = useTranslation();
   const selectedChannel = useSelectedChannel();
   const auth = useAuth();
   const modal = useModal();
@@ -23,31 +24,31 @@ const MessagesComponent = () => {
   const messageRef = useRef();
   const messageEnd = useRef();
 
-  const { data, isLoading } = useGetMessagesQuery(auth.token);
-
+  const {
+    data,
+    //  error,
+    isLoading,
+    // refetch,
+  } = useGetMessagesQuery(auth.token);
   const newCurrentMessages = newMessages.data.filter(
     (message) =>
       message.channelId === selectedChannel.currentChannelId.toString()
   );
-
   const [addMessage] = useAddMessageMutation();
-
   useEffect(() => {
     if (!modal.isOpen) {
       messageRef.current.focus();
     }
   });
-
   useEffect(() => {
     messageEnd.current?.scrollIntoView();
   }, [data, newMessages]);
-
   const formik = useFormik({
     initialValues: {
       body: "",
     },
     validationSchema: yup.object({
-      body: yup.string().required(),
+      body: yup.string().required(t("yup.required")),
     }),
     onSubmit: async (values) => {
       try {
@@ -67,7 +68,6 @@ const MessagesComponent = () => {
       }
     },
   });
-
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -78,13 +78,14 @@ const MessagesComponent = () => {
           <span className="text-muted">
             {isLoading
               ? null
-              : `${
-                  data.filter(
-                    (message) =>
-                      message.channelId ===
-                      selectedChannel.currentChannelId.toString()
-                  ).length + newCurrentMessages.length
-                } сообщений`}
+              : t("chatComponents.messages", {
+                  count:
+                    data.filter(
+                      (message) =>
+                        message.channelId ===
+                        selectedChannel.currentChannelId.toString()
+                    ).length + newCurrentMessages.length,
+                })}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
@@ -124,11 +125,11 @@ const MessagesComponent = () => {
                 className="border-0 p-0 ps-2 form-control"
                 type="text"
                 name="body"
-                placeholder="Введите сообщение..."
+                placeholder={t("chatComponents.enterMessage")}
                 id="body"
                 required
                 disabled={formik.isSubmitting || isLoading}
-                aria-label="Новое сообщение"
+                aria-label={t("chatComponents.newMessage")}
                 ref={messageRef}
               />
               <button
@@ -139,7 +140,7 @@ const MessagesComponent = () => {
                 }
               >
                 <ArrowRightSquare size={20} />
-                <span className="visually-hidden">Отправить</span>
+                <span className="visually-hidden">{t("send")}</span>
               </button>
             </div>
           </form>
@@ -148,5 +149,4 @@ const MessagesComponent = () => {
     </div>
   );
 };
-
 export default MessagesComponent;

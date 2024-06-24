@@ -17,7 +17,6 @@ import {
   useGetChannelsQuery,
 } from "../../../services/channelsApi.js";
 import { clearChannelHistory } from "../../../slices/channelsSlice.js";
-
 const RenameChannelComponent = () => {
   const { t } = useTranslation();
   const modal = useModal();
@@ -26,19 +25,14 @@ const RenameChannelComponent = () => {
   const newChannels = useChannels();
   const dispatch = useDispatch();
   const addChannelRef = useRef();
-
   useEffect(() => {
     addChannelRef.current.focus();
   }, []);
-
   const { data, refetch } = useGetChannelsQuery(auth.token);
-
   const [editChannel] = useEditChannelMutation();
-
   const channelsNames = data.map((channel) => channel.name);
   const newChannelsNames = newChannels.data.map((channel) => channel.name);
   const newChannelsIds = newChannels.data.map((channel) => channel.id);
-
   const formik = useFormik({
     initialValues: {
       channelName: "",
@@ -79,7 +73,6 @@ const RenameChannelComponent = () => {
       }
     },
   });
-
   return (
     <Modal centered show={modal.isOpen} onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
@@ -111,14 +104,14 @@ const RenameChannelComponent = () => {
                 type="button"
                 onClick={() => dispatch(closeModal())}
               >
-                {t("modals.cancel")}
+                {t("cancel")}
               </Button>
               <Button
                 variant="primary"
                 type="submit"
                 onClick={formik.handleSubmit}
               >
-                {t("modals.send")}
+                {t("send")}
               </Button>
             </div>
           </Form.Group>
@@ -127,5 +120,4 @@ const RenameChannelComponent = () => {
     </Modal>
   );
 };
-
 export default RenameChannelComponent;

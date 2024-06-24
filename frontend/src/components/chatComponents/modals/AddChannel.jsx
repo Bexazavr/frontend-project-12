@@ -11,7 +11,6 @@ import {
   useGetChannelsQuery,
 } from "../../../services/channelsApi.js";
 import { selectCurrentChannel } from "../../../slices/selectChannelSlice.js";
-
 const AddChannelComponent = () => {
   const { t } = useTranslation();
   const modal = useModal();
@@ -19,18 +18,13 @@ const AddChannelComponent = () => {
   const newChannels = useChannels();
   const dispatch = useDispatch();
   const addChannelRef = useRef();
-
   useEffect(() => {
     addChannelRef.current.focus();
   }, []);
-
   const { data } = useGetChannelsQuery(auth.token);
-
   const [AddChannel] = useAddChannelMutation();
-
   const channelsNames = data.map((channel) => channel.name);
   const newChannelsNames = newChannels.data.map((channel) => channel.name);
-
   const formik = useFormik({
     initialValues: {
       channelName: "",
@@ -64,7 +58,6 @@ const AddChannelComponent = () => {
       }
     },
   });
-
   return (
     <Modal centered show={modal.isOpen} onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
@@ -96,14 +89,14 @@ const AddChannelComponent = () => {
                 type="button"
                 onClick={() => dispatch(closeModal())}
               >
-                {t("modals.cancel")}
+                {t("cancel")}
               </Button>
               <Button
                 variant="primary"
                 type="submit"
                 onClick={formik.handleSubmit}
               >
-                {t("modals.send")}
+                {t("send")}
               </Button>
             </div>
           </Form.Group>
@@ -112,5 +105,4 @@ const AddChannelComponent = () => {
     </Modal>
   );
 };
-
 export default AddChannelComponent;
