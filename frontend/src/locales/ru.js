@@ -16,7 +16,7 @@ export default {
     },
     yup: {
       required: "Обязательное поле",
-      minAndMaxChannel: "От 3 до 20 символов",
+      minAndMax: "От 3 до 20 символов",
       notOneOf: "Должно быть уникальным",
     },
     delete: "Удалить",

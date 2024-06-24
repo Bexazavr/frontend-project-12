@@ -42,8 +42,8 @@ const RenameChannelComponent = () => {
         .string()
         .trim()
         .required(t("yup.required"))
-        .min(3, t("yup.minAndMaxChannel"))
-        .max(20, t("yup.minAndMaxChannel"))
+        .min(3, t("yup.minAndMax"))
+        .max(20, t("yup.minAndMax"))
         .notOneOf([...channelsNames, ...newChannelsNames], t("yup.notOneOf")),
     }),
     onSubmit: async (values) => {
