@@ -5,10 +5,8 @@ import { toast } from "react-toastify";
 import { useModal, useAuth, useSelectedChannel } from "../../../hooks/hooks";
 import { selectDefaultChannel } from "../../../slices/selectChannelSlice.js";
 import { closeModal } from "../../../slices/modalSlice.js";
-import {
-  useRemoveChannelMutation,
-  useGetChannelsQuery,
-} from "../../../services/channelsApi.js";
+import { useRemoveChannelMutation } from "../../../services/channelsApi.js";
+
 const RemoveChannelComponent = () => {
   const { t } = useTranslation();
   const modal = useModal();
@@ -19,8 +17,7 @@ const RemoveChannelComponent = () => {
 
   const channel = { id: modal.id, token: auth.token };
 
-  const removeChannelFunc = async (event) => {
-    event.preventDefault();
+  const removeChannelFunc = async () => {
     await removeChannel(channel)
       .then(() => {
         if (selectedChannel.currentChannelId.toString() === modal.id) {

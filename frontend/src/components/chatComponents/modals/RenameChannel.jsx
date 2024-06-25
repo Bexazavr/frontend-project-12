@@ -18,7 +18,7 @@ import {
   useEditChannelMutation,
   useGetChannelsQuery,
 } from "../../../services/channelsApi.js";
-import { clearChannelHistory } from "../../../slices/channelsSlice.js";
+
 const RenameChannelComponent = () => {
   const { t } = useTranslation();
   const modal = useModal();
@@ -30,11 +30,10 @@ const RenameChannelComponent = () => {
   useEffect(() => {
     addChannelRef.current.focus();
   }, []);
-  const { data, refetch } = useGetChannelsQuery(auth.token);
+  const { data } = useGetChannelsQuery(auth.token);
   const [editChannel] = useEditChannelMutation();
   const channelsNames = data.map((channel) => channel.name);
   const newChannelsNames = newChannels.data.map((channel) => channel.name);
-  const newChannelsIds = newChannels.data.map((channel) => channel.id);
   const formik = useFormik({
     initialValues: {
       channelName: "",
@@ -66,10 +65,6 @@ const RenameChannelComponent = () => {
             })
           );
         }
-        if (!newChannelsIds.includes(modal.id)) {
-          dispatch(clearChannelHistory());
-          refetch();
-        }
         toast.success(t("toastify.renameChannel"));
       } catch (e) {
         toast.error(t("toastify.loadingError"));
@@ -95,7 +90,7 @@ const RenameChannelComponent = () => {
               ref={addChannelRef}
             />
             <Form.Label htmlFor="channelName" className="visually-hidden">
-              {t("modals.renameChannel")}
+              {t("modals.channelName")}
             </Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.channelName}

@@ -81,7 +81,7 @@ const AddChannelComponent = () => {
               ref={addChannelRef}
             />
             <Form.Label htmlFor="channelName" className="visually-hidden">
-              {t("modals.addChannel")}
+              {t("modals.channelName")}
             </Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.channelName}

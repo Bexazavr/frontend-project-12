@@ -32,6 +32,7 @@ export const channelsApi = createApi({
           Authorization: `Bearer ${channel.token}`,
         },
       }),
+      invalidatesTags: ["Channel"],
     }),
     removeChannel: builder.mutation({
       query: (channel) => ({

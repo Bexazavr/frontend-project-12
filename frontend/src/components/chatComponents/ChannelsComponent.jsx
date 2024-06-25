@@ -51,9 +51,14 @@ const ChannelsComponent = () => {
         {data.map((channel) => (
           <Channel key={channel.id} data={channel} />
         ))}
-        {newChannels.data.map((channel) => (
-          <Channel key={channel.id} data={channel} />
-        ))}
+        {newChannels.data
+          .filter((channel) => {
+            const dataIds = data.map((dataEl) => dataEl.id);
+            return !dataIds.includes(channel.id);
+          })
+          .map((channel) => (
+            <Channel key={channel.id} data={channel} />
+          ))}
       </ul>
     </div>
   );
