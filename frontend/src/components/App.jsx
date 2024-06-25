@@ -1,6 +1,8 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import getPath from "../routes.js";
-
+import { ToastContainer } from "react-toastify";
 import SignUpPage from "./SignUpPage.jsx";
 import NotFoundPage from "./NotFoundPage.jsx";
 import LoginPage from "./LoginPage.jsx";
@@ -13,13 +15,25 @@ const App = () => (
       <Router>
         <Navbar />
         <Routes>
-          <Route path={getPath.signUpPage()} element={<SignUpPage />} />
-          <Route path={getPath.loginPage()} element={<LoginPage />} />
-          <Route path="*" element={<NotFoundPage />} />
           <Route path={getPath.chatPage()} element={<CheckTokenPage />} />
+          <Route path={getPath.loginPage()} element={<LoginPage />} />
+          <Route path={getPath.signUpPage()} element={<SignUpPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </div>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
   </div>
 );
 

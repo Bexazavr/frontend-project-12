@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useModal, useAuth, useChannels } from "../../../hooks/hooks";
 import { closeModal } from "../../../slices/modalSlice.js";
@@ -52,12 +53,13 @@ const AddChannelComponent = () => {
             name: response.data.name,
           })
         );
+        toast.success(t("toastify.addChannel"));
       } catch (e) {
-        console.log(e);
-        throw e;
+        toast.error(t("toastify.loadingError"));
       }
     },
   });
+
   return (
     <Modal centered show={modal.isOpen} onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
