@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import leoProfanity from "leo-profanity";
 import * as yup from "yup";
 import { ArrowRightSquare } from "react-bootstrap-icons";
 import {
@@ -39,6 +40,7 @@ const MessagesComponent = () => {
   useEffect(() => {
     messageEnd.current?.scrollIntoView();
   }, [data, newMessages]);
+
   const formik = useFormik({
     initialValues: {
       body: "",
@@ -48,9 +50,10 @@ const MessagesComponent = () => {
     }),
     onSubmit: async (values) => {
       try {
+        const clearedMessage = leoProfanity.clean(values.body);
         const newMessagePost = {
           message: {
-            body: values.body,
+            body: clearedMessage,
             channelId: selectedChannel.currentChannelId.toString(),
             username: auth.username,
           },
@@ -63,7 +66,6 @@ const MessagesComponent = () => {
       }
     },
   });
-
   if (error) {
     toast.error(t("toastify.loadingError"));
     return (

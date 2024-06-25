@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import leoProfanity from "leo-profanity";
 import {
   useModal,
   useAuth,
@@ -49,9 +50,10 @@ const RenameChannelComponent = () => {
     }),
     onSubmit: async (values) => {
       try {
+        const clearedChannelName = leoProfanity.clean(values.channelName);
         const newChannel = {
           id: modal.id,
-          body: { name: values.channelName },
+          body: { name: clearedChannelName },
           token: auth.token,
         };
         editChannel(newChannel);
