@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import { ArrowRightSquare } from "react-bootstrap-icons";
 import {
@@ -24,12 +25,7 @@ const MessagesComponent = () => {
   const messageRef = useRef();
   const messageEnd = useRef();
 
-  const {
-    data,
-    //  error,
-    isLoading,
-    // refetch,
-  } = useGetMessagesQuery(auth.token);
+  const { data, error, isLoading } = useGetMessagesQuery(auth.token);
   const newCurrentMessages = newMessages.data.filter(
     (message) =>
       message.channelId === selectedChannel.currentChannelId.toString()
@@ -63,11 +59,20 @@ const MessagesComponent = () => {
         addMessage(newMessagePost);
         formik.resetForm();
       } catch (e) {
-        console.log(e);
-        throw e;
+        toast.error(t("toastify.loadingError"));
       }
     },
   });
+
+  if (error) {
+    toast.error(t("toastify.loadingError"));
+    return (
+      <div className="d-flex align-items-center justify-content-center">
+        <div className="spinner-border text-danger" role="status" />
+      </div>
+    );
+  }
+
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">

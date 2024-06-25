@@ -29,9 +29,8 @@ const RemoveChannelComponent = () => {
         dispatch(closeModal());
         toast.success(t("toastify.removeChannel"));
       })
-      .catch((e) => {
+      .catch(() => {
         toast.error(t("toastify.loadingError"));
-        console.log(e);
       });
   };
 
