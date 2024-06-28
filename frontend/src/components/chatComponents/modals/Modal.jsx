@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import getModal from "./index.js";
-import { closeModal } from "../../../slices/modalSlice.js";
+import { useDispatch, useSelector } from 'react-redux';
+import getModal from './index.js';
+import { closeModal } from '../../../slices/modalSlice.js';
 
 const Modal = () => {
   const { isOpen, type } = useSelector((state) => state.modal);

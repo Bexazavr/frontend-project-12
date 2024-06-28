@@ -1,8 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+
 const defaultChannelId = 1;
-const defaultChannelName = "general";
+const defaultChannelName = 'general';
 const selectChannelSlice = createSlice({
-  name: "selectedChannel",
+  name: 'selectedChannel',
   initialState: {
     currentChannelId: defaultChannelId,
     currentChannelName: defaultChannelName,
@@ -19,7 +20,6 @@ const selectChannelSlice = createSlice({
   },
 });
 
-export const { selectCurrentChannel, selectDefaultChannel } =
-  selectChannelSlice.actions;
+export const { selectCurrentChannel, selectDefaultChannel } = selectChannelSlice.actions;
 
 export default selectChannelSlice.reducer;

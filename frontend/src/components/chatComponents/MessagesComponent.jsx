@@ -1,21 +1,21 @@
-import { useRef, useEffect } from "react";
-import { useFormik } from "formik";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import leoProfanity from "leo-profanity";
-import * as yup from "yup";
-import { ArrowRightSquare } from "react-bootstrap-icons";
+import { useRef, useEffect } from 'react';
+import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
+import * as yup from 'yup';
+import { ArrowRightSquare } from 'react-bootstrap-icons';
 import {
   useSelectedChannel,
   useAuth,
   useModal,
   useMessages,
-} from "../../hooks/hooks.js";
+} from '../../hooks/hooks.js';
 import {
   useGetMessagesQuery,
   useAddMessageMutation,
-} from "../../services/messagesApi.js";
-import Message from "./Message.jsx";
+} from '../../services/messagesApi.js';
+import Message from './Message.jsx';
 
 const MessagesComponent = () => {
   const { t } = useTranslation();
@@ -28,8 +28,7 @@ const MessagesComponent = () => {
 
   const { data, error, isLoading } = useGetMessagesQuery(auth.token);
   const newCurrentMessages = newMessages.data.filter(
-    (message) =>
-      message.channelId === selectedChannel.currentChannelId.toString()
+    (message) => message.channelId === selectedChannel.currentChannelId.toString(),
   );
   const [addMessage] = useAddMessageMutation();
   useEffect(() => {
@@ -43,10 +42,10 @@ const MessagesComponent = () => {
 
   const formik = useFormik({
     initialValues: {
-      body: "",
+      body: '',
     },
     validationSchema: yup.object({
-      body: yup.string().required(t("yup.required")),
+      body: yup.string().required(t('yup.required')),
     }),
     onSubmit: async (values) => {
       try {
@@ -62,12 +61,12 @@ const MessagesComponent = () => {
         addMessage(newMessagePost);
         formik.resetForm();
       } catch (e) {
-        toast.error(t("toastify.loadingError"));
+        toast.error(t('toastify.loadingError'));
       }
     },
   });
   if (error) {
-    toast.error(t("toastify.loadingError"));
+    toast.error(t('toastify.loadingError'));
     return (
       <div className="d-flex align-items-center justify-content-center">
         <div className="spinner-border text-danger" role="status" />
@@ -85,33 +84,30 @@ const MessagesComponent = () => {
           <span className="text-muted">
             {isLoading
               ? null
-              : t("chatComponents.messages", {
-                  count:
+              : t('chatComponents.messages', {
+                count:
                     data.filter(
-                      (message) =>
-                        message.channelId ===
-                        selectedChannel.currentChannelId.toString()
+                      (message) => message.channelId
+                        === selectedChannel.currentChannelId.toString(),
                     ).length + newCurrentMessages.length,
-                })}
+              })}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
           {isLoading
             ? null
             : data
-                .filter(
-                  (message) =>
-                    message.channelId ===
-                    selectedChannel.currentChannelId.toString()
-                )
-                .map((message) => (
-                  <Message key={message.id} message={message} />
-                ))}
+              .filter(
+                (message) => message.channelId
+                    === selectedChannel.currentChannelId.toString(),
+              )
+              .map((message) => (
+                <Message key={message.id} message={message} />
+              ))}
           {newMessages.data
             .filter(
-              (message) =>
-                message.channelId ===
-                selectedChannel.currentChannelId.toString()
+              (message) => message.channelId
+                === selectedChannel.currentChannelId.toString(),
             )
             .map((message) => (
               <Message key={message.id} message={message} />
@@ -132,11 +128,11 @@ const MessagesComponent = () => {
                 className="border-0 p-0 ps-2 form-control"
                 type="text"
                 name="body"
-                placeholder={t("chatComponents.enterMessage")}
+                placeholder={t('chatComponents.enterMessage')}
                 id="body"
                 required
                 disabled={formik.isSubmitting || isLoading}
-                aria-label={t("chatComponents.newMessage")}
+                aria-label={t('chatComponents.newMessage')}
                 ref={messageRef}
               />
               <button
@@ -147,7 +143,7 @@ const MessagesComponent = () => {
                 }
               >
                 <ArrowRightSquare size={20} />
-                <span className="visually-hidden">{t("send")}</span>
+                <span className="visually-hidden">{t('send')}</span>
               </button>
             </div>
           </form>

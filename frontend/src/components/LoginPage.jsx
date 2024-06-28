@@ -1,14 +1,14 @@
-import { useState, useRef, useEffect } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import axios from "axios";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import { addLoginInfo } from "../slices/authSlice.js";
-import img from "../assets/avatar.jpg";
-import getPath from "../routes.js";
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { addLoginInfo } from '../slices/authSlice.js';
+import img from '../assets/avatar.jpg';
+import getPath from '../routes.js';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -21,12 +21,12 @@ const LoginPage = () => {
   }, [loginFailed]);
   const formik = useFormik({
     initialValues: {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
     },
     validationSchema: yup.object({
-      username: yup.string().required(t("yup.required")),
-      password: yup.string().required(t("yup.required")),
+      username: yup.string().required(t('yup.required')),
+      password: yup.string().required(t('yup.required')),
     }),
     onSubmit: async (values) => {
       setFailedLogin(false);
@@ -45,7 +45,7 @@ const LoginPage = () => {
           setFailedLogin(true);
           inputEl.current.select();
         } else {
-          toast.error(t("toastify.connectionError"));
+          toast.error(t('toastify.connectionError'));
         }
       }
     },
@@ -60,7 +60,7 @@ const LoginPage = () => {
                 <img
                   src={img}
                   className="rounded-circle"
-                  alt={t("mainComponents.login")}
+                  alt={t('mainComponents.login')}
                 />
               </div>
               <form
@@ -69,7 +69,7 @@ const LoginPage = () => {
                 disabled={formik.isSubmitting}
               >
                 <h1 className="text-center mb-4">
-                  {t("mainComponents.login")}
+                  {t('mainComponents.login')}
                 </h1>
                 <div className="form-floating mb-3">
                   <input
@@ -77,19 +77,19 @@ const LoginPage = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.username}
                     className={
-                      loginFailed ? "form-control is-invalid" : "form-control"
+                      loginFailed ? 'form-control is-invalid' : 'form-control'
                     }
                     type="text"
                     name="username"
                     autoComplete="username"
-                    placeholder={t("mainComponents.yourUserName")}
+                    placeholder={t('mainComponents.yourUserName')}
                     id="username"
                     required
                     disabled={formik.isSubmitting}
                     ref={inputEl}
                   />
                   <label htmlFor="username">
-                    {t("mainComponents.yourUserName")}
+                    {t('mainComponents.yourUserName')}
                   </label>
                 </div>
                 <div className="form-floating mb-4">
@@ -98,22 +98,22 @@ const LoginPage = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
                     className={
-                      loginFailed ? "form-control is-invalid" : "form-control"
+                      loginFailed ? 'form-control is-invalid' : 'form-control'
                     }
                     type="password"
                     name="password"
                     autoComplete="password"
-                    placeholder={t("mainComponents.password")}
+                    placeholder={t('mainComponents.password')}
                     id="password"
                     required
                     disabled={formik.isSubmitting}
                   />
                   <label htmlFor="password">
-                    {t("mainComponents.password")}
+                    {t('mainComponents.password')}
                   </label>
                   {loginFailed ? (
                     <div className="invalid-tooltip">
-                      {t("mainComponents.failedLogin")}
+                      {t('mainComponents.failedLogin')}
                     </div>
                   ) : null}
                 </div>
@@ -122,15 +122,16 @@ const LoginPage = () => {
                   type="submit"
                   className="w-100 mb-3 btn btn-outline-primary"
                 >
-                  {t("mainComponents.login")}
+                  {t('mainComponents.login')}
                 </button>
               </form>
             </div>
             <div className="card-footer p-4">
               <div className="text-center">
-                <span>{t("mainComponents.noAccount")}</span>{" "}
+                <span>{t('mainComponents.noAccount')}</span>
+                {' '}
                 <NavLink to={getPath.signUpPage()}>
-                  {t("mainComponents.registration")}
+                  {t('mainComponents.registration')}
                 </NavLink>
               </div>
             </div>

@@ -1,13 +1,13 @@
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import getPath from "../routes.js";
-import { ToastContainer } from "react-toastify";
-import SignUpPage from "./SignUpPage.jsx";
-import NotFoundPage from "./NotFoundPage.jsx";
-import LoginPage from "./LoginPage.jsx";
-import CheckTokenPage from "./CheckTokenPage.jsx";
-import Navbar from "./Navbar.jsx";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import getPath from '../routes.js';
+import SignUpPage from './SignUpPage.jsx';
+import NotFoundPage from './NotFoundPage.jsx';
+import LoginPage from './LoginPage.jsx';
+import CheckTokenPage from './CheckTokenPage.jsx';
+import Navbar from './Navbar.jsx';
 
 const App = () => (
   <div className="h-100">

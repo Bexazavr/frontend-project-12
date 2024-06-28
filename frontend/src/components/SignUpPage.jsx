@@ -1,14 +1,14 @@
-import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
-import * as yup from "yup";
-import axios from "axios";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import { addLoginInfo, logOut } from "../slices/authSlice.js";
-import img from "../assets/avatar.jpg";
-import getPath from "../routes.js";
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import * as yup from 'yup';
+import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { addLoginInfo, logOut } from '../slices/authSlice.js';
+import img from '../assets/avatar.jpg';
+import getPath from '../routes.js';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
@@ -21,28 +21,28 @@ const SignUpPage = () => {
   }, [userExists]);
   const formik = useFormik({
     initialValues: {
-      username: "",
-      password: "",
-      confirmPassword: "",
+      username: '',
+      password: '',
+      confirmPassword: '',
     },
     validationSchema: yup.object({
       username: yup
         .string()
-        .required(t("yup.required"))
-        .min(3, t("yup.minAndMax"))
-        .max(20, t("yup.minAndMax"))
+        .required(t('yup.required'))
+        .min(3, t('yup.minAndMax'))
+        .max(20, t('yup.minAndMax'))
         .trim(),
       password: yup
         .string()
-        .required(t("yup.required"))
-        .min(6, t("yup.min"))
+        .required(t('yup.required'))
+        .min(6, t('yup.min'))
         .trim(),
       confirmPassword: yup
         .string()
         .test(
-          "confirmPassword",
-          t("yup.confirmPassword"),
-          (password, context) => password === context.parent.password
+          'confirmPassword',
+          t('yup.confirmPassword'),
+          (password, context) => password === context.parent.password,
         ),
     }),
     onSubmit: async (values) => {
@@ -63,7 +63,7 @@ const SignUpPage = () => {
           setExistUser(true);
           inputEl.current.select();
         } else {
-          toast.error(t("toastify.connectionError"));
+          toast.error(t('toastify.connectionError'));
         }
       }
     },
@@ -78,7 +78,7 @@ const SignUpPage = () => {
                 <img
                   src={img}
                   className="rounded-circle"
-                  alt={t("mainComponents.registration")}
+                  alt={t('mainComponents.registration')}
                 />
               </div>
               <form
@@ -87,7 +87,7 @@ const SignUpPage = () => {
                 disabled={formik.isSubmitting}
               >
                 <h1 className="text-center mb-4">
-                  {t("mainComponents.registration")}
+                  {t('mainComponents.registration')}
                 </h1>
                 <div className="form-floating mb-3">
                   <input
@@ -95,22 +95,22 @@ const SignUpPage = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.username}
                     className={
-                      userExists ||
-                      (formik.errors.username && formik.touched.username)
-                        ? "form-control is-invalid"
-                        : "form-control"
+                      userExists
+                      || (formik.errors.username && formik.touched.username)
+                        ? 'form-control is-invalid'
+                        : 'form-control'
                     }
                     type="text"
                     name="username"
                     autoComplete="username"
-                    placeholder={t("mainComponents.username")}
+                    placeholder={t('mainComponents.username')}
                     id="username"
                     required
                     disabled={formik.isSubmitting}
                     ref={inputEl}
                   />
                   <label className="form-label" htmlFor="username">
-                    {t("mainComponents.username")}
+                    {t('mainComponents.username')}
                   </label>
                   {formik.errors.username && formik.touched.username ? (
                     <div className="invalid-tooltip">
@@ -124,21 +124,21 @@ const SignUpPage = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
                     className={
-                      userExists ||
-                      (formik.errors.password && formik.touched.password)
-                        ? "form-control is-invalid"
-                        : "form-control"
+                      userExists
+                      || (formik.errors.password && formik.touched.password)
+                        ? 'form-control is-invalid'
+                        : 'form-control'
                     }
                     type="password"
                     name="password"
                     autoComplete="password"
-                    placeholder={t("mainComponents.password")}
+                    placeholder={t('mainComponents.password')}
                     id="password"
                     required
                     disabled={formik.isSubmitting}
                   />
                   <label className="form-label" htmlFor="password">
-                    {t("mainComponents.password")}
+                    {t('mainComponents.password')}
                   </label>
                   {formik.errors.password && formik.touched.password ? (
                     <div className="invalid-tooltip">
@@ -152,32 +152,32 @@ const SignUpPage = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.confirmPassword}
                     className={
-                      userExists ||
-                      (formik.errors.confirmPassword &&
-                        formik.touched.confirmPassword)
-                        ? "form-control is-invalid"
-                        : "form-control"
+                      userExists
+                      || (formik.errors.confirmPassword
+                        && formik.touched.confirmPassword)
+                        ? 'form-control is-invalid'
+                        : 'form-control'
                     }
                     type="password"
                     name="confirmPassword"
                     autoComplete="confirmPassword"
-                    placeholder={t("mainComponents.confirmPassword")}
+                    placeholder={t('mainComponents.confirmPassword')}
                     id="confirmPassword"
                     required
                     disabled={formik.isSubmitting}
                   />
                   <label className="form-label" htmlFor="confirmPassword">
-                    {t("mainComponents.confirmPassword")}
+                    {t('mainComponents.confirmPassword')}
                   </label>
-                  {formik.errors.confirmPassword &&
-                  formik.touched.confirmPassword ? (
+                  {formik.errors.confirmPassword
+                  && formik.touched.confirmPassword ? (
                     <div className="invalid-tooltip">
                       {formik.errors.confirmPassword}
                     </div>
-                  ) : null}
+                    ) : null}
                   {userExists ? (
                     <div className="invalid-tooltip">
-                      {t("mainComponents.alreadyHaveAccount")}
+                      {t('mainComponents.alreadyHaveAccount')}
                     </div>
                   ) : null}
                 </div>
@@ -186,7 +186,7 @@ const SignUpPage = () => {
                   type="submit"
                   className="w-100 mb-3 btn btn-outline-primary"
                 >
-                  {t("mainComponents.signUp")}
+                  {t('mainComponents.signUp')}
                 </button>
               </form>
             </div>

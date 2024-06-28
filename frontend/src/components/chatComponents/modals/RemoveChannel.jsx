@@ -1,11 +1,11 @@
-import { Modal, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import { useModal, useAuth, useSelectedChannel } from "../../../hooks/hooks";
-import { selectDefaultChannel } from "../../../slices/selectChannelSlice.js";
-import { closeModal } from "../../../slices/modalSlice.js";
-import { useRemoveChannelMutation } from "../../../services/channelsApi.js";
+import { Modal, Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { useModal, useAuth, useSelectedChannel } from '../../../hooks/hooks';
+import { selectDefaultChannel } from '../../../slices/selectChannelSlice.js';
+import { closeModal } from '../../../slices/modalSlice.js';
+import { useRemoveChannelMutation } from '../../../services/channelsApi.js';
 
 const RemoveChannelComponent = () => {
   const { t } = useTranslation();
@@ -24,20 +24,20 @@ const RemoveChannelComponent = () => {
           dispatch(selectDefaultChannel());
         }
         dispatch(closeModal());
-        toast.success(t("toastify.removeChannel"));
+        toast.success(t('toastify.removeChannel'));
       })
       .catch(() => {
-        toast.error(t("toastify.loadingError"));
+        toast.error(t('toastify.loadingError'));
       });
   };
 
   return (
     <Modal centered show={modal.isOpen} onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>{t("modals.deleteChannel")}</Modal.Title>
+        <Modal.Title>{t('modals.deleteChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p className="lead">{t("sure")}</p>
+        <p className="lead">{t('sure')}</p>
         <div className="d-flex justify-content-end">
           <Button
             variant="secondary"
@@ -45,10 +45,10 @@ const RemoveChannelComponent = () => {
             type="button"
             onClick={() => dispatch(closeModal())}
           >
-            {t("cancel")}
+            {t('cancel')}
           </Button>
           <Button variant="danger" type="button" onClick={removeChannelFunc}>
-            {t("delete")}
+            {t('delete')}
           </Button>
         </div>
       </Modal.Body>

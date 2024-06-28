@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const selectModalSlice = createSlice({
-  name: "selectedModal",
+  name: 'selectedModal',
   initialState: { isOpen: false, type: null, id: null },
   reducers: {
     openModal: (state, { payload }) => {

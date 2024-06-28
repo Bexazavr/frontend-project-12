@@ -1,10 +1,10 @@
-import { Dropdown, ButtonGroup } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { useSelectedChannel, useModal } from "../../hooks/hooks.js";
-import { selectCurrentChannel } from "../../slices/selectChannelSlice.js";
-import getModalComponent from "./modals/index.js";
-import { openModal } from "../../slices/modalSlice.js";
+import { Dropdown, ButtonGroup } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useSelectedChannel, useModal } from '../../hooks/hooks.js';
+import { selectCurrentChannel } from '../../slices/selectChannelSlice.js';
+import getModalComponent from './modals/index.js';
+import { openModal } from '../../slices/modalSlice.js';
 
 const Channel = ({ data }) => {
   const { t } = useTranslation();
@@ -20,8 +20,8 @@ const Channel = ({ data }) => {
           type="button"
           className={
             Number(id) !== selectedChannel.currentChannelId
-              ? "w-100 rounded-0 text-start btn"
-              : "w-100 rounded-0 text-start btn btn-secondary"
+              ? 'w-100 rounded-0 text-start btn'
+              : 'w-100 rounded-0 text-start btn btn-secondary'
           }
         >
           <span className="me-1">#</span>
@@ -38,8 +38,8 @@ const Channel = ({ data }) => {
           onClick={() => dispatch(selectCurrentChannel(data))}
           className={
             Number(id) !== selectedChannel.currentChannelId
-              ? "w-100 rounded-0 text-start text-truncate btn"
-              : "w-100 rounded-0 text-start text-truncate btn btn-secondary"
+              ? 'w-100 rounded-0 text-start text-truncate btn'
+              : 'w-100 rounded-0 text-start text-truncate btn btn-secondary'
           }
           type="button"
         >
@@ -49,25 +49,25 @@ const Channel = ({ data }) => {
         <Dropdown.Toggle
           variant={
             Number(id) !== selectedChannel.currentChannelId
-              ? "light"
-              : "secondary"
+              ? 'light'
+              : 'secondary'
           }
           className="flex-grow-0 dropdown-toggle-split"
         >
           <span className="visually-hidden">
-            {t("chatComponents.channelControls")}
+            {t('chatComponents.channelControls')}
           </span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item
-            onClick={() => dispatch(openModal({ type: "removeChannel", id }))}
+            onClick={() => dispatch(openModal({ type: 'removeChannel', id }))}
           >
-            {t("delete")}
+            {t('delete')}
           </Dropdown.Item>
           <Dropdown.Item
-            onClick={() => dispatch(openModal({ type: "renameChannel", id }))}
+            onClick={() => dispatch(openModal({ type: 'renameChannel', id }))}
           >
-            {t("rename")}
+            {t('rename')}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

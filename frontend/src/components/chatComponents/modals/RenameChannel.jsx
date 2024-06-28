@@ -1,23 +1,23 @@
-import { Modal, Button, Form } from "react-bootstrap";
-import { useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import leoProfanity from "leo-profanity";
+import { Modal, Button, Form } from 'react-bootstrap';
+import { useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import {
   useModal,
   useAuth,
   useChannels,
   useSelectedChannel,
-} from "../../../hooks/hooks";
-import { selectCurrentChannel } from "../../../slices/selectChannelSlice.js";
-import { closeModal } from "../../../slices/modalSlice.js";
+} from '../../../hooks/hooks';
+import { selectCurrentChannel } from '../../../slices/selectChannelSlice.js';
+import { closeModal } from '../../../slices/modalSlice.js';
 import {
   useEditChannelMutation,
   useGetChannelsQuery,
-} from "../../../services/channelsApi.js";
+} from '../../../services/channelsApi.js';
 
 const RenameChannelComponent = () => {
   const { t } = useTranslation();
@@ -36,16 +36,16 @@ const RenameChannelComponent = () => {
   const newChannelsNames = newChannels.data.map((channel) => channel.name);
   const formik = useFormik({
     initialValues: {
-      channelName: "",
+      channelName: '',
     },
     validationSchema: yup.object({
       channelName: yup
         .string()
         .trim()
-        .required(t("yup.required"))
-        .min(3, t("yup.minAndMax"))
-        .max(20, t("yup.minAndMax"))
-        .notOneOf([...channelsNames, ...newChannelsNames], t("yup.notOneOf")),
+        .required(t('yup.required'))
+        .min(3, t('yup.minAndMax'))
+        .max(20, t('yup.minAndMax'))
+        .notOneOf([...channelsNames, ...newChannelsNames], t('yup.notOneOf')),
     }),
     onSubmit: async (values) => {
       try {
@@ -62,19 +62,19 @@ const RenameChannelComponent = () => {
             selectCurrentChannel({
               id: selectedChannel.currentChannelId,
               name: values.channelName,
-            })
+            }),
           );
         }
-        toast.success(t("toastify.renameChannel"));
+        toast.success(t('toastify.renameChannel'));
       } catch (e) {
-        toast.error(t("toastify.loadingError"));
+        toast.error(t('toastify.loadingError'));
       }
     },
   });
   return (
     <Modal centered show={modal.isOpen} onHide={() => dispatch(closeModal())}>
       <Modal.Header closeButton>
-        <Modal.Title h4="true">{t("modals.renameChannel")}</Modal.Title>
+        <Modal.Title h4="true">{t('modals.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -90,7 +90,7 @@ const RenameChannelComponent = () => {
               ref={addChannelRef}
             />
             <Form.Label htmlFor="channelName" className="visually-hidden">
-              {t("modals.channelName")}
+              {t('modals.channelName')}
             </Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.channelName}
@@ -102,14 +102,14 @@ const RenameChannelComponent = () => {
                 type="button"
                 onClick={() => dispatch(closeModal())}
               >
-                {t("cancel")}
+                {t('cancel')}
               </Button>
               <Button
                 variant="primary"
                 type="submit"
                 onClick={formik.handleSubmit}
               >
-                {t("send")}
+                {t('send')}
               </Button>
             </div>
           </Form.Group>

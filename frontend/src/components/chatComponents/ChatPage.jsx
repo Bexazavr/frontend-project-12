@@ -1,5 +1,5 @@
-import ChannelsComponent from "./ChannelsComponent.jsx";
-import MessagesComponent from "./MessagesComponent.jsx";
+import ChannelsComponent from './ChannelsComponent.jsx';
+import MessagesComponent from './MessagesComponent.jsx';
 
 const ChatPage = () => (
   <div className="container h-100 my-4 overflow-hidden rounded shadow">
