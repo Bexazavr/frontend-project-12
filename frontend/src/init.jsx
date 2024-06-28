@@ -7,6 +7,7 @@ import store from "./slices/index.js";
 import App from "./components/App";
 import { socket, WebSocketContext } from "./context/webSocketContext.js";
 import Modal from "./components/chatComponents/modals/Modal.jsx";
+import { Provider as RollBar, ErrorBoundary } from "@rollbar/react";
 
 const init = async () => {
   const i18n = i18next.createInstance();
@@ -19,15 +20,27 @@ const init = async () => {
   const russianDictionary = leoProfanity.getDictionary("ru");
   leoProfanity.add(russianDictionary);
 
+  const rollbarConfig = {
+    accessToken: "POST_CLIENT_ITEM_ACCESS_TOKEN",
+    captureUncaught: true,
+    payload: {
+      environment: "production",
+    },
+  };
+
   return (
-    <I18nextProvider i18n={i18n}>
-      <Provider store={store}>
-        <WebSocketContext.Provider value={socket}>
-          <App />
-          <Modal />
-        </WebSocketContext.Provider>
-      </Provider>
-    </I18nextProvider>
+    <RollBar config={rollbarConfig}>
+      <ErrorBoundary>
+        <I18nextProvider i18n={i18n}>
+          <Provider store={store}>
+            <WebSocketContext.Provider value={socket}>
+              <App />
+              <Modal />
+            </WebSocketContext.Provider>
+          </Provider>
+        </I18nextProvider>
+      </ErrorBoundary>
+    </RollBar>
   );
 };
 
