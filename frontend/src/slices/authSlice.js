@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const parsedLocalStorage = JSON.parse(localStorage.getItem('userToken'));
