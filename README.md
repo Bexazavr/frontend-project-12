@@ -1,4 +1,5 @@
 [![Actions Status](https://github.com/Bexazavr/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Bexazavr/frontend-project-12/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a4434be3f5bead3c87e2/maintainability)](https://codeclimate.com/github/Bexazavr/frontend-project-12/maintainability)
 
 # Chat app project (Slack)
 
