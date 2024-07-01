@@ -6,7 +6,7 @@
 
 A simplified version of Slack chat. The chat has a system of registration, authorization. The chat has the ability to create channels, change channel names and delete them.
 
-### [Demo](https://frontend-project-12-2ncc.onrender.com)
+### [Demo](https://frontend-project-12-o8kt.onrender.com)
 
 ## Getting Started
 
@@ -40,7 +40,7 @@ Run a development server from root directory:
 
 ```sh
 
-make  develop
+make  local-start
 
 ```
 
