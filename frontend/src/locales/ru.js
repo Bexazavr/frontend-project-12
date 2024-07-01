@@ -1,6 +1,6 @@
 export default {
   translation: {
-    chatName: 'Just Chat',
+    chatName: 'Hexlet Chat',
     mainComponents: {
       login: 'Войти',
       logout: 'Выйти',
