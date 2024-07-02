@@ -30,7 +30,7 @@ const MessagesComponent = () => {
   const messageRef = useRef();
   const messageEnd = useRef();
 
-  const { data, error, isLoading } = useGetMessagesQuery(auth.token);
+  const { data, error, isLoading } = useGetMessagesQuery();
 
   useEffect(() => {
     if (data) {
@@ -69,7 +69,7 @@ const MessagesComponent = () => {
             channelId: selectedChannel.currentChannelId.toString(),
             username: auth.username,
           },
-          token: auth.token,
+
         };
         addMessage(newMessagePost);
         formik.resetForm();

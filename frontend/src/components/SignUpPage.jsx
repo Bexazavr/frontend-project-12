@@ -49,14 +49,14 @@ const SignUpPage = () => {
       setExistUser(false);
       try {
         const { username, password } = values;
-        const result = await axios.post(getPath.signUpPath(), {
+        const result = await axios.post(getPath.signUpPath, {
           username,
           password,
         });
         const { data } = result;
         dispatch(logOut());
         dispatch(addLoginInfo({ data }));
-        navigate(getPath.chatPage());
+        navigate(getPath.chatPage);
       } catch (error) {
         formik.setSubmitting(false);
         if (error.response.status === 409) {

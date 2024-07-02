@@ -32,13 +32,13 @@ const LoginPage = () => {
       setFailedLogin(false);
       try {
         const { username, password } = values;
-        const result = await axios.post(getPath.loginPath(), {
+        const result = await axios.post(getPath.loginPath, {
           username,
           password,
         });
         const { data } = result;
         dispatch(addLoginInfo({ data }));
-        navigate(getPath.chatPage());
+        navigate(getPath.chatPage);
       } catch (error) {
         formik.setSubmitting(false);
         if (error.response.status === 401) {
@@ -130,7 +130,7 @@ const LoginPage = () => {
               <div className="text-center">
                 <span>{t('mainComponents.noAccount')}</span>
                 {' '}
-                <NavLink to={getPath.signUpPage()}>
+                <NavLink to={getPath.signUpPage}>
                   {t('mainComponents.registration')}
                 </NavLink>
               </div>

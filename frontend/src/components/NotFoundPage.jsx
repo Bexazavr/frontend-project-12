@@ -12,7 +12,7 @@ const NotFoundPage = () => {
       <p className="text-muted">
         {t('mainComponents.but')}
         {' '}
-        <a href={getPath.chatPage()}>{t('mainComponents.toMainPage')}</a>
+        <a href={getPath.chatPage}>{t('mainComponents.toMainPage')}</a>
       </p>
     </div>
   );

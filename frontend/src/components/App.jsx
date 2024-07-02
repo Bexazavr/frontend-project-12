@@ -15,9 +15,9 @@ const App = () => (
       <Router>
         <Navbar />
         <Routes>
-          <Route path={getPath.chatPage()} element={<CheckTokenPage />} />
-          <Route path={getPath.loginPage()} element={<LoginPage />} />
-          <Route path={getPath.signUpPage()} element={<SignUpPage />} />
+          <Route path={getPath.chatPage} element={<CheckTokenPage />} />
+          <Route path={getPath.loginPage} element={<LoginPage />} />
+          <Route path={getPath.signUpPage} element={<SignUpPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
