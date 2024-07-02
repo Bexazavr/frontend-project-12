@@ -1,10 +1,11 @@
 import { useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import leoProfanity from 'leo-profanity';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
+import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import {
   useSelectedChannel,
   useAuth,
@@ -15,30 +16,42 @@ import {
   useGetMessagesQuery,
   useAddMessageMutation,
 } from '../../services/messagesApi.js';
+import { addMessageData } from '../../slices/messagesSlice.js';
+
 import Message from './Message.jsx';
 
 const MessagesComponent = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const selectedChannel = useSelectedChannel();
   const auth = useAuth();
   const modal = useModal();
-  const newMessages = useMessages();
+  const messages = useMessages();
   const messageRef = useRef();
   const messageEnd = useRef();
 
   const { data, error, isLoading } = useGetMessagesQuery(auth.token);
-  const newCurrentMessages = newMessages.data.filter(
+
+  useEffect(() => {
+    if (data) {
+      dispatch(addMessageData(data));
+    }
+  }, [isLoading, data, dispatch]);
+
+  const currentMessages = messages.data.filter(
     (message) => message.channelId === selectedChannel.currentChannelId.toString(),
   );
+
   const [addMessage] = useAddMessageMutation();
   useEffect(() => {
     if (!modal.isOpen) {
       messageRef.current.focus();
     }
   });
+
   useEffect(() => {
     messageEnd.current?.scrollIntoView();
-  }, [data, newMessages]);
+  }, [data, currentMessages]);
 
   const formik = useFormik({
     initialValues: {
@@ -73,7 +86,6 @@ const MessagesComponent = () => {
       </div>
     );
   }
-
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -84,35 +96,16 @@ const MessagesComponent = () => {
           <span className="text-muted">
             {isLoading
               ? null
-              : t('chatComponents.messages', {
-                count:
-                    data.filter(
-                      (message) => message.channelId
-                        === selectedChannel.currentChannelId.toString(),
-                    ).length + newCurrentMessages.length,
-              })}
+              : t('chatComponents.messages', { count: currentMessages.length })}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
           {isLoading
             ? null
-            : data
-              .filter(
-                (message) => message.channelId
-                    === selectedChannel.currentChannelId.toString(),
-              )
-              .map((message) => (
-                <Message key={message.id} message={message} />
-              ))}
-          {newMessages.data
-            .filter(
-              (message) => message.channelId
-                === selectedChannel.currentChannelId.toString(),
-            )
-            .map((message) => (
+            : currentMessages.map((message) => (
               <Message key={message.id} message={message} />
             ))}
-          <div ref={messageEnd} />
+          <div id="messageEnd" ref={messageEnd} />
         </div>
         <div className="mt-auto px-5 py-3">
           <form

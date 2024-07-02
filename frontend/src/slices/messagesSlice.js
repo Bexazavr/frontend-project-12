@@ -11,7 +11,12 @@ const messagesSlice = createSlice({
     clearMessageHistory: (state) => {
       state.data = [];
     },
+    addMessageData: (state, { payload }) => {
+      state.data = [...payload];
+    },
   },
 });
-export const { addNewMesage, clearMessageHistory } = messagesSlice.actions;
+
+export const { addNewMesage, clearMessageHistory, addMessageData } = messagesSlice.actions;
+
 export default messagesSlice.reducer;

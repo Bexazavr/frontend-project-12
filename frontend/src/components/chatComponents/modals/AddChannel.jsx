@@ -12,7 +12,7 @@ import {
   useAddChannelMutation,
   useGetChannelsQuery,
 } from '../../../services/channelsApi.js';
-import { selectCurrentChannel } from '../../../slices/selectChannelSlice.js';
+import { selectCurrentChannel } from '../../../slices/channelsSlice.js';
 
 const AddChannelComponent = () => {
   const { t } = useTranslation();
