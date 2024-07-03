@@ -4,8 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const parsedLocalStorage = JSON.parse(localStorage.getItem('userToken'));
 
 const initialState = {
-  token: !parsedLocalStorage ? null : parsedLocalStorage.token,
-  username: !parsedLocalStorage ? null : parsedLocalStorage.username,
+  token: parsedLocalStorage ? parsedLocalStorage.token : null ,
+  username: parsedLocalStorage ? parsedLocalStorage.username : null,
 };
 
 const authSlice = createSlice({
