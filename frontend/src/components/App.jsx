@@ -8,6 +8,7 @@ import NotFoundPage from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import CheckTokenPage from './CheckTokenPage.jsx';
 import Navbar from './Navbar.jsx';
+import ChatPage from './chatComponents/ChatPage.jsx';
 
 const App = () => (
   <div className="h-100">
@@ -15,7 +16,14 @@ const App = () => (
       <Router>
         <Navbar />
         <Routes>
-          <Route path={getPath.chatPage} element={<CheckTokenPage />} />
+          <Route
+            path={getPath.chatPage}
+            element={(
+              <CheckTokenPage>
+                <ChatPage />
+              </CheckTokenPage>
+      )}
+          />
           <Route path={getPath.loginPage} element={<LoginPage />} />
           <Route path={getPath.signUpPage} element={<SignUpPage />} />
           <Route path="*" element={<NotFoundPage />} />
