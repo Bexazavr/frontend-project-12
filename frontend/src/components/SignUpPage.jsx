@@ -2,16 +2,17 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import * as yup from 'yup';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { addLoginInfo, logOut } from '../slices/authSlice.js';
 import img from '../assets/avatar.jpg';
 import getPath from '../routes.js';
+import getSignupSchema from '../schemas/signupSchema.js';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
+  const validationSchema = getSignupSchema(t);
   const [userExists, setExistUser] = useState(false);
   const dispatch = useDispatch();
   const inputEl = useRef();
@@ -19,32 +20,14 @@ const SignUpPage = () => {
   useEffect(() => {
     inputEl.current.focus();
   }, [userExists]);
+
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
       confirmPassword: '',
     },
-    validationSchema: yup.object({
-      username: yup
-        .string()
-        .required(t('yup.required'))
-        .min(3, t('yup.minAndMax'))
-        .max(20, t('yup.minAndMax'))
-        .trim(),
-      password: yup
-        .string()
-        .required(t('yup.required'))
-        .min(6, t('yup.min'))
-        .trim(),
-      confirmPassword: yup
-        .string()
-        .test(
-          'confirmPassword',
-          t('yup.confirmPassword'),
-          (password, context) => password === context.parent.password,
-        ),
-    }),
+    validationSchema,
     onSubmit: async (values) => {
       setExistUser(false);
       try {
