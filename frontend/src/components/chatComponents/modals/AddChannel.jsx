@@ -1,22 +1,22 @@
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
-import { useModal, useChannels } from '../../../hooks/hooks';
 import { closeModal } from '../../../slices/modalSlice.js';
 import {
   useAddChannelMutation,
 } from '../../../services/channelsApi.js';
 import { selectCurrentChannel } from '../../../slices/channelsSlice.js';
+import { getChannels, getModal } from '../../../selectors/selectors';
 
 const AddChannelComponent = () => {
   const { t } = useTranslation();
-  const modal = useModal();
-  const channels = useChannels();
+  const modal = useSelector(getModal);
+  const channels = useSelector(getChannels);
   const dispatch = useDispatch();
   const addChannelRef = useRef();
   useEffect(() => {

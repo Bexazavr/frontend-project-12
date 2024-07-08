@@ -1,9 +1,10 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../hooks/hooks.js';
+import { useSelector } from 'react-redux';
+import { getAuth } from '../selectors/selectors.js';
 import getPath from '../routes.js';
 
 const CheckTokenPage = ({ children }) => {
-  const auth = useAuth();
+  const auth = useSelector(getAuth);
   const location = useLocation();
 
   return auth.token ? (

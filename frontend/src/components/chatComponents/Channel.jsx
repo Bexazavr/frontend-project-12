@@ -1,16 +1,16 @@
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useSelectedChannel, useModal } from '../../hooks/hooks.js';
 import { selectCurrentChannel } from '../../slices/channelsSlice.js';
 import getModalComponent from './modals/index.js';
 import { openModal } from '../../slices/modalSlice.js';
+import { getModal, getSelectedChannel } from '../../selectors/selectors.js';
 
 const Channel = ({ data }) => {
   const { t } = useTranslation();
   const { id, name, removable } = data;
-  const modal = useModal();
-  const selectedChannel = useSelectedChannel();
+  const modal = useSelector(getModal);
+  const selectedChannel = useSelector(getSelectedChannel);
   const dispatch = useDispatch();
   if (!removable) {
     return (

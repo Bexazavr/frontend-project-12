@@ -1,17 +1,17 @@
 import { Modal, Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useModal, useAuth, useSelectedChannel } from '../../../hooks/hooks';
 import { selectDefaultChannel } from '../../../slices/selectChannelSlice.js';
 import { closeModal } from '../../../slices/modalSlice.js';
 import { useRemoveChannelMutation } from '../../../services/channelsApi.js';
+import { getAuth, getModal, getSelectedChannel } from '../../../selectors/selectors';
 
 const RemoveChannelComponent = () => {
   const { t } = useTranslation();
-  const modal = useModal();
-  const auth = useAuth();
-  const selectedChannel = useSelectedChannel();
+  const modal = useSelector(getModal);
+  const auth = useSelector(getAuth);
+  const selectedChannel = useSelector(getSelectedChannel);
   const dispatch = useDispatch();
   const [removeChannel] = useRemoveChannelMutation();
 

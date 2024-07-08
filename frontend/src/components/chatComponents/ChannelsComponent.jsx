@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
 import { BsPlusSquare } from 'react-icons/bs';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useGetChannelsQuery } from '../../services/channelsApi.js';
-import { useModal, useChannels } from '../../hooks/hooks.js';
 import { addChannelData } from '../../slices/channelsSlice.js';
 import Channel from './Channel.jsx';
 import getModalComponent from './modals/index.js';
 import { openModal } from '../../slices/modalSlice.js';
+import { getChannels, getModal } from '../../selectors/selectors.js';
 
 const ChannelsComponent = () => {
   const { t } = useTranslation();
-  const modal = useModal();
-  const channels = useChannels();
+  const modal = useSelector(getModal);
+  const channels = useSelector(getChannels);
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetChannelsQuery();
 

@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
@@ -7,26 +7,26 @@ import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 import {
-  useSelectedChannel,
-  useAuth,
-  useModal,
-  useMessages,
-} from '../../hooks/hooks.js';
-import {
   useGetMessagesQuery,
   useAddMessageMutation,
 } from '../../services/messagesApi.js';
 import { addMessageData } from '../../slices/messagesSlice.js';
 
 import Message from './Message.jsx';
+import {
+  getAuth,
+  getMessages,
+  getModal,
+  getSelectedChannel,
+} from '../../selectors/selectors.js';
 
 const MessagesComponent = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const selectedChannel = useSelectedChannel();
-  const auth = useAuth();
-  const modal = useModal();
-  const messages = useMessages();
+  const selectedChannel = useSelector(getSelectedChannel);
+  const auth = useSelector(getAuth);
+  const modal = useSelector(getModal);
+  const messages = useSelector(getMessages);
   const messageRef = useRef();
   const messageEnd = useRef();
 
@@ -69,7 +69,6 @@ const MessagesComponent = () => {
             channelId: selectedChannel.currentChannelId.toString(),
             username: auth.username,
           },
-
         };
         addMessage(newMessagePost);
         formik.resetForm();
