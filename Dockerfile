@@ -4,14 +4,15 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy frontend source first — postinstall needs it to run npm ci inside frontend/
-COPY frontend/ ./frontend/
-
-# Install root deps — postinstall runs "cd frontend && npm ci" automatically
+# Copy only manifests first — enables install layer caching
 COPY package.json package-lock.json ./
+COPY frontend/package.json frontend/package-lock.json ./frontend/
+
+# postinstall runs "cd frontend && npm ci" — works because frontend manifests are present
 RUN npm ci
 
-# Build React frontend
+# Copy all source and build
+COPY frontend/ ./frontend/
 RUN npm run build
 
 # --- Production stage ---
@@ -19,15 +20,15 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install only production deps (chat server)
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
-# Copy built frontend
 COPY --from=builder /app/frontend/build ./frontend/build
 
-# PORT env var is read by @hexlet/chat-server (default 5001)
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
 ENV PORT=3000
 EXPOSE 3000
 
-CMD ["npx", "start-server", "-s", "./frontend/build"]
+CMD ["npm", "start"]
